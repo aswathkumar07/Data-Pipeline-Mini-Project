@@ -9,5 +9,3 @@ This project contains a data pipeline where data from CSV file is pulled into a 
 * Go to the directory where you have saved the python files
 
 * Create db_connection_details.py with relevant details for hostname, username, port and password
-
-* 
