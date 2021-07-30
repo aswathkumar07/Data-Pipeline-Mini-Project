@@ -2,7 +2,7 @@
 
 This project contains a data pipeline where data from CSV file is pulled into a MySQL database.
 
-###How to run the project:
+### How to run the project:
 
 * Import Ch15_Mini_Proj_Conda_Env.yml in Anaconda Navigator
 
