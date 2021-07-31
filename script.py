@@ -5,21 +5,23 @@ import os
 
 from mysql.connector import connection
 
+
 def get_db_connection():
     """
         Gets the MySQL server connection
     """
     connection = None
     try:
-        connection = mysql.connector.connect(user = db_connection_details.USER,
-                                            password = db_connection_details.PASSWORD,
-                                            host = db_connection_details.HOST,
-                                            port = db_connection_details.PORT)
+        connection = mysql.connector.connect(user=db_connection_details.USER,
+                                             password=db_connection_details.PASSWORD,
+                                             host=db_connection_details.HOST,
+                                             port=db_connection_details.PORT)
 
     except Exception as error:
         print("Error while connecting to database for job tracker", error)
 
     return connection
+
 
 def create_new_database_and_table(db_name, table_name, connection):
     """
@@ -44,16 +46,17 @@ def create_new_database_and_table(db_name, table_name, connection):
         db_cursor.execute(query2)
         connection.commit()
         db_cursor.close()
-    
+
     except Exception as e:
         db_cursor.close()
+
 
 def load_third_party(db_name, table_name, connection, csv_file_path):
     try:
         db_cursor = connection.cursor()
         csv_data = pd.read_csv(csv_file_path, header=None)
-        #print(csv_data)
-        
+        # print(csv_data)
+
         for row_no in range(0, len(csv_data)):
             row_to_upload = (
                 csv_data.iloc[row_no][0],
@@ -70,11 +73,12 @@ def load_third_party(db_name, table_name, connection, csv_file_path):
             query = f"INSERT INTO {db_name}.{table_name} VALUES {str(row_to_upload)};"
             db_cursor.execute(query)
             connection.commit()
-            
+
         db_cursor.close()
 
     except Exception as e:
         db_cursor.close()
+
 
 def query_popular_tickets(db_name, table_name, connection):
     # Getting the most popular ticket in the last month
@@ -90,6 +94,7 @@ def query_popular_tickets(db_name, table_name, connection):
     records = db_cursor.fetchall()
     db_cursor.close()
     return records
+
 
 if __name__ == "__main__":
     connection = get_db_connection()
@@ -111,6 +116,3 @@ if __name__ == "__main__":
                 -  {lst_print_result[1]}
                 -  {lst_print_result[2]}  
     """)
-
-
-
